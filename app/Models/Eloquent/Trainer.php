@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models\Eloquent;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Trainer extends Authenticatable
 {
     use Notifiable;
 
@@ -16,7 +16,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'address',
+        'title',
+        'about',
+        'phone',
+        'bday',
+        'branch_id',
+        'level',
+        'level_type',
+        'locale',
+        'photo',
+        'password',
     ];
 
     /**
@@ -35,5 +47,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'bday' => 'datetime',
     ];
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function trainees()
+    {
+        return $this->hasMany(Trainee::class);
+    }
 }
